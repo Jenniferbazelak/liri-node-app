@@ -16,12 +16,15 @@ var fs = require("fs");
 
 var command = process.argv[2];
 var input = process.argv[3];
+for (i = 4; i < process.argv.length; i++) {
+    input += (" " + process.argv[i])
+};
 
 var bandsInTownKey = keys.bandsInTown.id;
 
 
 function concertThis() {
-    
+
     var queryUrl = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=" + bandsInTownKey;
 
     request(queryUrl, function (error, response, body) {
@@ -30,28 +33,29 @@ function concertThis() {
         }
 
         if (!error && response.statusCode === 200) {
-
-            for (var i = 0; i < body.length; i++) {
-                console.log("Venue: " + JSON.parse(body)[i].venue.name);
-                console.log("Location: " + JSON.parse(body)[i].venue.city, JSON.parse(body)[i].venue.country);
-                console.log("Date: " + moment(JSON.parse(body)[i].datetime).format("MM/DD/YYYY"));
+                var data = JSON.parse(body);
+            for (var i = 0; i < data.length; i++) {
+                console.log("Venue: " + data[i].venue.name);
+                console.log("Location: " + data[i].venue.city, data[i].venue.country);
+                console.log("Date: " + moment(data[i].datetime).format("MM/DD/YYYY"));
             }
         }
     });
 }
 
 function spotifyThisSong() {
-    if (!input){
-    spotify.search({ type: 'track', query: "The Sign" }, function (err, data) {
-        if (err) {
-            return console.log('Error occurred: ' + err);
-        }
-        console.log("Artist(s): " + data.tracks);
-        console.log("Song Name: " + data.tracks);
-        console.log("Preview : " + data.tracks);
-        console.log("Album: " + data.tracks);
-    });}
-    else{
+    if (!input) {
+        spotify.search({ type: 'track', query: "The Sign" }, function (err, data) {
+            if (err) {
+                return console.log('Error occurred: ' + err);
+            }
+            console.log("Artist(s): " + data.tracks);
+            console.log("Song Name: " + data.tracks);
+            console.log("Preview : " + data.tracks);
+            console.log("Album: " + data.tracks);
+        });
+    }
+    else {
         spotify.search({ type: 'track', query: input }, function (err, data) {
             if (err) {
                 return console.log('Error occurred: ' + err);
@@ -61,7 +65,8 @@ function spotifyThisSong() {
             console.log("Preview : " + data.tracks);
             console.log("Album: " + data.tracks);
 
-        });}
+        });
+    }
 
 }
 
