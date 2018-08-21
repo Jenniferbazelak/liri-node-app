@@ -49,10 +49,10 @@ function spotifyThisSong() {
             if (err) {
                 return console.log('Error occurred: ' + err);
             }
-            console.log("Artist(s): " + data.tracks);
-            console.log("Song Name: " + data.tracks);
-            console.log("Preview : " + data.tracks);
-            console.log("Album: " + data.tracks);
+            console.log("Artist(s): " + data.tracks.items[5].artists[0].name);
+            console.log("Song Name: " + data.tracks.items[5].name);
+            console.log("Preview : " + data.tracks.items[5].album.name);
+            console.log("Album: " + data.tracks.items[5].preview_url);
         });
     }
     else {
@@ -60,10 +60,10 @@ function spotifyThisSong() {
             if (err) {
                 return console.log('Error occurred: ' + err);
             }
-            console.log("Artist(s): " + data.tracks);
-            console.log("Song Name: " + data.tracks);
-            console.log("Preview : " + data.tracks);
-            console.log("Album: " + data.tracks);
+            console.log("Artist(s): " + data.tracks.items[5].artists[0].name);
+            console.log("Song Name: " + data.tracks.items[5].name);
+            console.log("Preview : " + data.tracks.items[5].album.name);
+            console.log("Album: " + data.tracks.items[5].preview_url);
 
         });
     }
